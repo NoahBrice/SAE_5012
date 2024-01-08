@@ -22,6 +22,9 @@ class DataSet
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $dataSet_path = null;
 
+    #[ORM\ManyToOne(inversedBy: 'dataset')]
+    private ?Site $id_site = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +62,18 @@ class DataSet
     public function setDataSetPath(?string $dataSet_path): static
     {
         $this->dataSet_path = $dataSet_path;
+
+        return $this;
+    }
+
+    public function getIdSite(): ?Site
+    {
+        return $this->id_site;
+    }
+
+    public function setIdSite(?Site $id_site): static
+    {
+        $this->id_site = $id_site;
 
         return $this;
     }

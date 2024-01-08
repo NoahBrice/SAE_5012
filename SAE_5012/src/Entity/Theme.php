@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ThemeRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ThemeRepository::class)]
@@ -18,6 +20,9 @@ class Theme
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $path = null;
+
+    #[ORM\ManyToOne(inversedBy: 'theme')]
+    private ?Site $id_sites = null;
 
     public function getId(): ?int
     {
@@ -44,6 +49,18 @@ class Theme
     public function setPath(?string $path): static
     {
         $this->path = $path;
+
+        return $this;
+    }
+
+    public function getIdSites(): ?Site
+    {
+        return $this->id_sites;
+    }
+
+    public function setIdSites(?Site $id_sites): static
+    {
+        $this->id_sites = $id_sites;
 
         return $this;
     }

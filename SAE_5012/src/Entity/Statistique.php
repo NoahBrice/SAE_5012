@@ -16,6 +16,9 @@ class Statistique
     #[ORM\Column(nullable: true)]
     private ?int $nb_vue = null;
 
+    #[ORM\ManyToOne(inversedBy: 'statistiques')]
+    private ?Site $id_site = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +32,18 @@ class Statistique
     public function setNbVue(?int $nb_vue): static
     {
         $this->nb_vue = $nb_vue;
+
+        return $this;
+    }
+
+    public function getIdSite(): ?Site
+    {
+        return $this->id_site;
+    }
+
+    public function setIdSite(?Site $id_site): static
+    {
+        $this->id_site = $id_site;
 
         return $this;
     }
