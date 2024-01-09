@@ -39,6 +39,9 @@ class Site
     #[ORM\OneToMany(mappedBy: 'id_site', targetEntity: Page::class)]
     private Collection $page;
 
+    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'site')]
+    private Collection $users;
+
     public function __construct()
     {
         $this->theme = new ArrayCollection();
@@ -46,6 +49,7 @@ class Site
         $this->statistiques = new ArrayCollection();
         $this->dataset = new ArrayCollection();
         $this->page = new ArrayCollection();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -249,6 +253,33 @@ class Site
             if ($page->getIdSite() === $this) {
                 $page->setIdSite(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, User>
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): static
+    {
+        if (!$this->users->contains($user)) {
+            $this->users->add($user);
+            $user->addSite($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): static
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeSite($this);
         }
 
         return $this;

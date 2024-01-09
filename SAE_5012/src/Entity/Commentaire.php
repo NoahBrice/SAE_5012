@@ -23,6 +23,9 @@ class Commentaire
     #[ORM\ManyToOne(inversedBy: 'commentaire')]
     private ?Bloc $id_blocs = null;
 
+    #[ORM\ManyToOne(inversedBy: 'commentaire')]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -60,6 +63,18 @@ class Commentaire
     public function setIdBlocs(?Bloc $id_blocs): static
     {
         $this->id_blocs = $id_blocs;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }
